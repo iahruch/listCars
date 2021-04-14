@@ -1,0 +1,62 @@
+<div class="group-control">
+
+  <button mat-stroked-button  [routerLink]="['/owner']" [queryParams]="{'params': 'create'}">
+    <i class="tiny material-icons">add</i>
+    Добавить
+  </button>
+
+  <button mat-stroked-button [disabled]="isDisable" [routerLink]="['/owner']" [queryParams]="{'id': idOwner, 'params': 'view'}">
+    <i class="tiny material-icons" > visibility</i>
+    Просмотр
+  </button>
+
+  <button mat-stroked-button [disabled]="isDisable"  [routerLink]="['/owner']" [queryParams]="{'id': idOwner, 'params': 'edit'}">
+    <i class="tiny material-icons">edit</i>
+    Редактировать
+  </button>
+
+  <button mat-stroked-button [disabled]="isDisable" (click)="deleteOwnerCar()">
+    <i class="tiny material-icons">remove</i>
+    Удалить
+  </button>
+
+</div>
+
+
+<table mat-table [dataSource]="owners" class="table">
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef > / </th>
+
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox
+        (change)="isChecked($event, row)"
+       >
+      </mat-checkbox>
+    </td>
+
+  </ng-container>
+  <ng-container matColumnDef="secondname" >
+    <th mat-header-cell *matHeaderCellDef (click)="foo()"> Фамилия </th>
+    <td mat-cell *matCellDef="let element" > {{element.secondname}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="firstname">
+    <th mat-header-cell *matHeaderCellDef> Имя </th>
+    <td mat-cell *matCellDef="let element"> {{element.firstname}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="middlename">
+    <th mat-header-cell *matHeaderCellDef> Очество </th>
+    <td mat-cell *matCellDef="let element"> {{element.middlename}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="carsCount">
+    <th mat-header-cell *matHeaderCellDef> Кол. автомобилей </th>
+    <td mat-cell *matCellDef="let element"> {{element.cars.length}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="getIdOwner(row.id)">
+
+  </tr>
+</table>

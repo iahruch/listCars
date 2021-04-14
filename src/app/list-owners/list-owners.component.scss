@@ -1,0 +1,50 @@
+
+.loading {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mat-progress-bar {
+    width: 80%;
+  }
+}
+//stylling table
+.table {
+  width: 100%;
+  min-width: 100%;
+  td {
+    vertical-align: baseline;
+  }
+}
+.mat-row[ng-reflect-router-link]{
+  cursor: pointer;
+  &:hover{
+    background-color: rgba(0,0,0,0.1);
+  }
+}
+th.mat-header-cell {
+  background:  rgba(0, 0, 0, 0.3);
+}
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+ border-left: 1px solid rgba(0, 0, 0, 0.12);
+ padding-left: 10px;
+}
+th.mat-header-cell:last-child , td.mat-cell:last-child, td.mat-footer-cell:last-child {
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+}
+th.mat-header-cell {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+
+.group-control {
+  margin-bottom: 15px;
+  button {
+    margin-right: 5px;
+  }
+  i {
+    font-size: 16px;
+  }
+}
+
+

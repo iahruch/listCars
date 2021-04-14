@@ -1,0 +1,21 @@
+.mat-input-element:disabled,
+.mat-form-field-type-mat-native-select.mat-form-field-disabled
+.mat-form-field-infix::after {
+  color: rgb(84, 84, 84);
+  cursor: not-allowed;
+}
+fieldset {
+  padding: 1rem 0.5rem;
+  margin-bottom: 1rem;
+}
+
+button[disabled]{
+ cursor: not-allowed;
+}
+.delete-btn {
+  color: tomato;
+  vertical-align: super;
+}
+.btn-action {
+  margin-right: 5px;
+}

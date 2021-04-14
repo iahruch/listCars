@@ -11,6 +11,7 @@ export interface ICarOwnersServiceInterface {
     aMiddleName: string,
     aCars: CarEntityInterface[]
   ): Observable<OwnerEntityInterface>
-  editOwner(aOwner: OwnerEntityInterface): Observable<OwnerEntityInterface>
+  //editOwner(aOwner: OwnerEntityInterface): Observable<OwnerEntityInterface>
   deleteOwner(aOwnerId: number): void
+  deleteOwner(OwnerId: number, numberCar: string): void
 }

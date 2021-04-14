@@ -1,0 +1,126 @@
+
+
+<form [formGroup]="carForm" *ngIf="true">
+  <fieldset>
+    <legend>Данные собственников </legend>
+    <mat-form-field appearance="outline" >
+    <mat-label>Фамилия</mat-label>
+    <input type="text" matInput formControlName="secondnameControl" >
+    <mat-error *ngIf="getControls.secondnameControl.errors && (getControls.secondnameControl.dirty || getControls.secondnameControl.touched)">
+      <span *ngIf="getControls.secondnameControl.hasError('required')"> Поле обязательно для заполнения</span>
+    </mat-error>
+  </mat-form-field>
+
+    <mat-form-field  appearance="outline">
+      <mat-label>Имя</mat-label>
+      <input type="text" matInput formControlName="firstnameControl" >
+      <mat-error *ngIf="getControls.firstnameControl.errors && (getControls.firstnameControl.dirty || getControls.firstnameControl.touched)">
+        <span *ngIf="getControls.firstnameControl.hasError('required')"> Поле обязательно для заполнения</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Фамилия</mat-label>
+      <input type="text" matInput formControlName="middlenameControl" >
+      <mat-error *ngIf="getControls.middlenameControl.errors && (getControls.middlenameControl.dirty || getControls.middlenameControl.touched)">
+        <span *ngIf="getControls.middlenameControl.hasError('required')"> Поле обязательно для заполнения</span>
+      </mat-error>
+    </mat-form-field>
+  </fieldset>
+
+
+  <fieldset>
+    <legend>Cписок автомобилей </legend>
+    <div formArrayName="carsControl">
+    <div *ngFor="let item of carsControl; let ind = index" [formGroupName]="ind">
+
+      <mat-form-field class="form-group" appearance="outline">
+       <mat-label>Номер</mat-label>
+        <input type="text" matInput formControlName="numberCar" >
+
+        <mat-error *ngIf="carsControl[ind].controls.numberCar.errors && (carsControl[ind].controls.numberCar.dirty || carsControl[ind].controls.numberCar.touched)">
+          <span *ngIf="carsControl[ind].controls.numberCar.hasError('required')">Поле обязательно для заполнения</span>
+          <span *ngIf="carsControl[ind].controls.numberCar.hasError('invalidNumber')"> Форма: АА0000АА" </span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-group" appearance="outline">
+        <mat-label>Наз. машины</mat-label>
+        <input type="text" matInput formControlName="nameCar" >
+        <mat-error *ngIf="carsControl[ind].controls.nameCar.errors && (carsControl[ind].controls.nameCar.dirty || carsControl[ind].controls.nameCar.touched)">
+          <span *ngIf="carsControl[ind].controls.nameCar.hasError('required')">Поле обязательно для заполнения</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-group" appearance="outline">
+        <mat-label>Производитель</mat-label>
+        <input type="text" matInput formControlName="producer" >
+        <mat-error *ngIf="carsControl[ind].controls.producer.errors && (carsControl[ind].controls.producer.dirty || carsControl[ind].controls.producer.touched)">
+          <span *ngIf="carsControl[ind].controls.producer.hasError('required')">Поле обязательно для заполнения</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-group" appearance="outline">
+        <mat-label>Год</mat-label>
+        <input type="text" matInput formControlName="year" >
+
+        <mat-error *ngIf="carsControl[ind].controls.year.errors && (carsControl[ind].controls.year.dirty || carsControl[ind].controls.year.touched)">
+          <span *ngIf="carsControl[ind].controls.year.hasError('required')"> Поле обязательно для заполнения. </span>
+          <span *ngIf="carsControl[ind].controls.year.hasError('pattern')"> Формат года: 4 числа. </span>
+          <span *ngIf="carsControl[ind].controls.year.hasError('invalidYear')">Диапозон года с 1990 до текущего.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <button
+        mat-icon-button
+        aria-label="Trash"
+        class="delete-btn"
+        (click)="deleteCar(carsControl[ind].controls.numberCar.value)"
+        [disabled]="this.carForm.invalid"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+
+    </div>
+  </div>
+  </fieldset>
+</form>
+
+
+<div class="action-btn">
+  <button
+    mat-stroked-button
+    color="primary"
+    aria-label="Btn add car"
+    class="btn-action"
+    (click)="addNewCar()"
+  >
+    <mat-icon>add</mat-icon>
+    <span>Добавить авто</span>
+  </button>
+
+  <button
+    mat-flat-button
+    color="primary"
+    aria-label="Btn save data"
+    class="btn-action"
+    [disabled]="this.carForm.invalid"
+    (click)="saveData()"
+  >
+    <mat-icon>markunread</mat-icon>
+    <span>Сохранить</span>
+  </button>
+
+  <button
+    mat-flat-button
+    color="primary"
+    aria-label="Btn go back"
+    class="btn-action"
+    (click)="goBack()"
+  >
+    <mat-icon>keyboard_backspace</mat-icon>
+    <span>Назад</span>
+  </button>
+</div>
+
+
