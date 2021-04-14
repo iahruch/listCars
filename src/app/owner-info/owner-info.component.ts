@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import * as FormValidator from './../shared/Validators/formValidators'
 import { CarOwnersServiceService } from '../shared/services/carOwnersService.service'
 import { OwnerEntityInterface } from '../shared/types/OwnerEntity.interface'
-import { collectExternalReferences } from '@angular/compiler'
+
 import { CarEntityInterface } from '../shared/types/CarEntity.interface'
 import { SnackServices } from '../shared/services/snack.services'
 
@@ -18,6 +18,9 @@ export class OwnerInfoComponent implements OnInit {
   owner: OwnerEntityInterface
   carForm: FormGroup
   isShow = false
+  viewMode = false
+  editMode = false
+  createMode = false
 
   constructor(
     private carOwnersService: CarOwnersServiceService,
@@ -32,10 +35,13 @@ export class OwnerInfoComponent implements OnInit {
       let paramsUrl = params.get('params')
 
       if (paramsUrl === 'view') {
+        this.viewMode = true
         this.getData(+params.get('id'))
       }
 
       if (paramsUrl === 'create') {
+        this.createMode = true
+
         const emptyOwner = {
           id: 1,
           firstname: '',
@@ -48,6 +54,7 @@ export class OwnerInfoComponent implements OnInit {
       }
 
       if (paramsUrl === 'edit') {
+        this.editMode = true
         this.getData(+params.get('id'))
       }
     })
@@ -131,6 +138,12 @@ export class OwnerInfoComponent implements OnInit {
 
   //Add and update data
   saveData(): void {
+    if (this.editMode) {
+    }
+    this.createNewOwner()
+  }
+
+  createNewOwner() {
     if (this.carForm.invalid) {
       this.snackBar.openSnackBar('Значение формы заполнены некорректно!!!')
       return
@@ -141,8 +154,7 @@ export class OwnerInfoComponent implements OnInit {
       middlenameControl: aMiddleName,
       secondnameControl: aLastName,
     } = this.carForm.value
-    console.log('saveData', this.carForm.value)
-    console.log('this.owner', this.owner)
+
     this.carOwnersService
       .createOwner(aLastName, aFirstName, aMiddleName, aCars)
       .subscribe((data) => {

@@ -1,7 +1,7 @@
 
 
 <form [formGroup]="carForm" *ngIf="true">
-  <fieldset>
+  <fieldset *ngIf="carForm">
     <legend>Данные собственников </legend>
     <mat-form-field appearance="outline" >
     <mat-label>Фамилия</mat-label>
@@ -29,7 +29,7 @@
   </fieldset>
 
 
-  <fieldset>
+  <fieldset  *ngIf="carForm">
     <legend>Cписок автомобилей </legend>
     <div formArrayName="carsControl">
     <div *ngFor="let item of carsControl; let ind = index" [formGroupName]="ind">
@@ -76,7 +76,7 @@
         aria-label="Trash"
         class="delete-btn"
         (click)="deleteCar(carsControl[ind].controls.numberCar.value)"
-        [disabled]="this.carForm.invalid"
+        [disabled]="this.carForm.invalid || viewMode"
       >
         <mat-icon>delete</mat-icon>
       </button>
@@ -93,6 +93,7 @@
     color="primary"
     aria-label="Btn add car"
     class="btn-action"
+    [disabled]="viewMode"
     (click)="addNewCar()"
   >
     <mat-icon>add</mat-icon>
@@ -104,7 +105,7 @@
     color="primary"
     aria-label="Btn save data"
     class="btn-action"
-    [disabled]="this.carForm.invalid"
+    [disabled]="this.carForm.invalid || viewMode"
     (click)="saveData()"
   >
     <mat-icon>markunread</mat-icon>
