@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core'
 import { CarOwnersServiceService } from '../shared/services/carOwnersService.service'
-import { Observable } from 'rxjs'
 import { OwnerEntityInterface } from '../shared/types/OwnerEntity.interface'
 import { SnackServices } from '../shared/services/snack.services'
 

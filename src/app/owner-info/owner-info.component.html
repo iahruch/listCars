@@ -5,25 +5,25 @@
     <legend>Данные собственников </legend>
     <mat-form-field appearance="outline" >
     <mat-label>Фамилия</mat-label>
-    <input type="text" matInput formControlName="secondnameControl" >
-    <mat-error *ngIf="getControls.secondnameControl.errors && (getControls.secondnameControl.dirty || getControls.secondnameControl.touched)">
-      <span *ngIf="getControls.secondnameControl.hasError('required')"> Поле обязательно для заполнения</span>
+    <input type="text" matInput formControlName="secondname" >
+    <mat-error *ngIf="getControls.secondname.errors && (getControls.secondname.dirty || getControls.secondname.touched)">
+      <span *ngIf="getControls.secondname.hasError('required')"> Поле обязательно для заполнения</span>
     </mat-error>
   </mat-form-field>
 
     <mat-form-field  appearance="outline">
       <mat-label>Имя</mat-label>
-      <input type="text" matInput formControlName="firstnameControl" >
-      <mat-error *ngIf="getControls.firstnameControl.errors && (getControls.firstnameControl.dirty || getControls.firstnameControl.touched)">
-        <span *ngIf="getControls.firstnameControl.hasError('required')"> Поле обязательно для заполнения</span>
+      <input type="text" matInput formControlName="firstname" >
+      <mat-error *ngIf="getControls.firstname.errors && (getControls.firstname.dirty || getControls.firstname.touched)">
+        <span *ngIf="getControls.firstname.hasError('required')"> Поле обязательно для заполнения</span>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Фамилия</mat-label>
-      <input type="text" matInput formControlName="middlenameControl" >
-      <mat-error *ngIf="getControls.middlenameControl.errors && (getControls.middlenameControl.dirty || getControls.middlenameControl.touched)">
-        <span *ngIf="getControls.middlenameControl.hasError('required')"> Поле обязательно для заполнения</span>
+      <input type="text" matInput formControlName="middlename" >
+      <mat-error *ngIf="getControls.middlename.errors && (getControls.middlename.dirty || getControls.middlename.touched)">
+        <span *ngIf="getControls.middlename.hasError('required')"> Поле обязательно для заполнения</span>
       </mat-error>
     </mat-form-field>
   </fieldset>
@@ -31,7 +31,7 @@
 
   <fieldset  *ngIf="carForm">
     <legend>Cписок автомобилей </legend>
-    <div formArrayName="carsControl">
+    <div formArrayName="cars">
     <div *ngFor="let item of carsControl; let ind = index" [formGroupName]="ind">
 
       <mat-form-field class="form-group" appearance="outline">

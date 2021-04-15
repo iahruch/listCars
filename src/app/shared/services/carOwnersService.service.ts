@@ -62,25 +62,16 @@ export class CarOwnersServiceService implements ICarOwnersServiceInterface {
       .subscribe()
   }
 
-  editOwner(owner: OwnerEntityInterface) {
-    // // const url = `${this.baseUrl}/${owner.id}`
-    //
-    // return this.http.put(this.baseUrl, owner, this.httpOptions).pipe(
-    //   tap((owner: OwnerEntityInterface) =>
-    //     console.log(`updated owner id=${owner.id}`)
-    //   ),
-    //   catchError((err) => {
-    //     return throwError(err)
-    //   })
-    // )
+  editOwner(owner: OwnerEntityInterface): Observable<any> {
+    return this.http
+      .put(`${this.baseUrl}/${owner.id}`, owner, this.httpOptions)
+      .pipe(
+        tap(() => console.log(`updated owner id=${owner.id}`)),
+        catchError((err) => {
+          return throwError(err)
+        })
+      )
   }
-  // /** PUT: update the hero on the server */
-  // updateHero(hero: Hero): Observable<any> {
-  //   return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
-  //     tap(_ => this.log(`updated hero id=${hero.id}`)),
-  //     catchError(this.handleError<any>('updateHero'))
-  //   );
-  // }
 
   createOwner(
     secondname: string,
