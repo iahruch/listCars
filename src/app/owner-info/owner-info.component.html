@@ -35,7 +35,9 @@
   <fieldset  *ngIf="carForm">
     <legend>Cписок автомобилей </legend>
     <div formArrayName="cars">
+
     <div *ngFor="let item of carsControl.controls; let ind = index" [formGroupName]="ind">
+
 
       <mat-form-field class="form-group" appearance="outline">
        <mat-label>{{item[ind]}}Номер</mat-label>

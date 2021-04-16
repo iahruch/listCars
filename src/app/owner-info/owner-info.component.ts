@@ -8,6 +8,7 @@ import { OwnerEntityInterface } from '../shared/types/OwnerEntity.interface'
 
 import { CarEntityInterface } from '../shared/types/CarEntity.interface'
 import { SnackServices } from '../shared/services/snack.services'
+import { log } from 'util'
 
 @Component({
   selector: 'app-owner-info',
@@ -71,6 +72,7 @@ export class OwnerInfoComponent implements OnInit {
         cars.map((car: CarEntityInterface) => this.generateCar(car))
       ),
     })
+
     this.isShow = false
   }
 
@@ -119,6 +121,7 @@ export class OwnerInfoComponent implements OnInit {
       producer: '',
       year: 0,
     }
+
     this.carsControl.push(this.generateCar(car))
   }
 
