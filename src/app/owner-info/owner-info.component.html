@@ -1,6 +1,9 @@
+<div *ngIf="isShow">
+  Loading...
+</div>
 
-
-<form [formGroup]="carForm" *ngIf="true">
+<ng-container *ngIf="!isShow">
+<form [formGroup]="carForm" *ngIf="carForm">
   <fieldset *ngIf="carForm">
     <legend>Данные собственников </legend>
     <mat-form-field appearance="outline" >
@@ -32,31 +35,31 @@
   <fieldset  *ngIf="carForm">
     <legend>Cписок автомобилей </legend>
     <div formArrayName="cars">
-    <div *ngFor="let item of carsControl; let ind = index" [formGroupName]="ind">
+    <div *ngFor="let item of carsControl.controls; let ind = index" [formGroupName]="ind">
 
       <mat-form-field class="form-group" appearance="outline">
-       <mat-label>Номер</mat-label>
+       <mat-label>{{item[ind]}}Номер</mat-label>
         <input type="text" matInput formControlName="numberCar" >
 
-        <mat-error *ngIf="carsControl[ind].controls.numberCar.errors && (carsControl[ind].controls.numberCar.dirty || carsControl[ind].controls.numberCar.touched)">
-          <span *ngIf="carsControl[ind].controls.numberCar.hasError('required')">Поле обязательно для заполнения</span>
-          <span *ngIf="carsControl[ind].controls.numberCar.hasError('invalidNumber')"> Форма: АА0000АА" </span>
+        <mat-error *ngIf="item['controls'].numberCar.errors && (item['controls'].numberCar.dirty || item['controls'].numberCar.touched)">
+          <span *ngIf="item['controls'].numberCar.hasError('required')">Поле обязательно для заполнения</span>
+          <span *ngIf="item['controls'].numberCar.hasError('invalidNumber')"> Форма: АА0000АА" </span>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="form-group" appearance="outline">
         <mat-label>Наз. машины</mat-label>
         <input type="text" matInput formControlName="nameCar" >
-        <mat-error *ngIf="carsControl[ind].controls.nameCar.errors && (carsControl[ind].controls.nameCar.dirty || carsControl[ind].controls.nameCar.touched)">
-          <span *ngIf="carsControl[ind].controls.nameCar.hasError('required')">Поле обязательно для заполнения</span>
+        <mat-error *ngIf="item['controls'].nameCar.errors && (item['controls'].nameCar.dirty || item['controls'].nameCar.touched)">
+          <span *ngIf="item['controls'].nameCar.hasError('required')">Поле обязательно для заполнения</span>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="form-group" appearance="outline">
         <mat-label>Производитель</mat-label>
         <input type="text" matInput formControlName="producer" >
-        <mat-error *ngIf="carsControl[ind].controls.producer.errors && (carsControl[ind].controls.producer.dirty || carsControl[ind].controls.producer.touched)">
-          <span *ngIf="carsControl[ind].controls.producer.hasError('required')">Поле обязательно для заполнения</span>
+        <mat-error *ngIf="item['controls'].producer.errors && (item[ind].controls.producer.dirty || item['controls'].controls.producer.touched)">
+          <span *ngIf="item['controls'].controls.producer.hasError('required')">Поле обязательно для заполнения</span>
         </mat-error>
       </mat-form-field>
 
@@ -64,10 +67,10 @@
         <mat-label>Год</mat-label>
         <input type="text" matInput formControlName="year" >
 
-        <mat-error *ngIf="carsControl[ind].controls.year.errors && (carsControl[ind].controls.year.dirty || carsControl[ind].controls.year.touched)">
-          <span *ngIf="carsControl[ind].controls.year.hasError('required')"> Поле обязательно для заполнения. </span>
-          <span *ngIf="carsControl[ind].controls.year.hasError('pattern')"> Формат года: 4 числа. </span>
-          <span *ngIf="carsControl[ind].controls.year.hasError('invalidYear')">Диапозон года с 1990 до текущего.</span>
+        <mat-error *ngIf="item['controls'].year.errors && (item['controls'].year.dirty || item['controls'].year.touched)">
+          <span *ngIf="item['controls'].year.hasError('required')"> Поле обязательно для заполнения. </span>
+          <span *ngIf="item['controls'].year.hasError('pattern')"> Формат года: 4 числа. </span>
+          <span *ngIf="item['controls'].year.hasError('invalidYear')">Диапозон года с 1990 до текущего.</span>
         </mat-error>
       </mat-form-field>
 
@@ -123,5 +126,5 @@
     <span>Назад</span>
   </button>
 </div>
-
+</ng-container>
 

@@ -8,7 +8,6 @@ import { OwnerEntityInterface } from '../shared/types/OwnerEntity.interface'
 
 import { CarEntityInterface } from '../shared/types/CarEntity.interface'
 import { SnackServices } from '../shared/services/snack.services'
-import { log } from 'util'
 
 @Component({
   selector: 'app-owner-info',
@@ -18,7 +17,8 @@ import { log } from 'util'
 export class OwnerInfoComponent implements OnInit {
   owner: OwnerEntityInterface
   carForm: FormGroup
-  isShow = false
+
+  isShow = true
   viewMode = false
   editMode = false
   createMode = false
@@ -42,15 +42,6 @@ export class OwnerInfoComponent implements OnInit {
 
       if (paramsUrl === 'create') {
         this.createMode = true
-
-        const emptyOwner = {
-          id: 1,
-          firstname: '',
-          secondname: '',
-          middlename: '',
-          cars: [{ nameCar: '', numberCar: '', producer: '', year: 0 }],
-        }
-        this.owner = emptyOwner
         this.initializeForm()
       }
 
@@ -59,10 +50,6 @@ export class OwnerInfoComponent implements OnInit {
         this.getData(+params.get('id'))
       }
     })
-    // setTimeout(() => {
-    //   this.isShow = true
-    //   console.log('isShow ', this.isShow)
-    // }, 1000)
   }
 
   getData(id): void {
@@ -76,7 +63,6 @@ export class OwnerInfoComponent implements OnInit {
 
   initializeForm(): void {
     const { firstname, secondname, middlename, cars } = this.owner
-
     this.carForm = this.fb.group({
       firstname: [firstname, [Validators.required]],
       secondname: [secondname, [Validators.required]],
@@ -85,16 +71,18 @@ export class OwnerInfoComponent implements OnInit {
         cars.map((car: CarEntityInterface) => this.generateCar(car))
       ),
     })
+    this.isShow = false
+  }
 
-    this.carForm.valueChanges.subscribe((val) => {
-      console.log(val)
-    })
-    this.carForm.controls['cars'].valueChanges.subscribe((val) => {
-      console.log(val)
-    })
+  get carsControl(): FormArray {
+    return this.carForm.get('cars') as FormArray
+  }
+  get getControls() {
+    return this.carForm.controls
   }
 
   generateCar(car): FormGroup {
+    console.log('generateCar(car)', car)
     return this.fb.group({
       nameCar: [car.nameCar, [Validators.required]],
       numberCar: [
@@ -106,19 +94,11 @@ export class OwnerInfoComponent implements OnInit {
         car.year,
         [
           Validators.required,
-          Validators.pattern('^[1-9][0-9]{3}'),
+          Validators.pattern('^[1-9][0-9]{3}$'),
           FormValidator.ValidatorYear,
         ],
       ],
     })
-  }
-
-  get getControls() {
-    return this.carForm.controls
-  }
-
-  get carsControl() {
-    return this.carForm.controls.cars['controls'] as FormArray
   }
 
   //delete owner's car
@@ -139,31 +119,27 @@ export class OwnerInfoComponent implements OnInit {
       producer: '',
       year: 0,
     }
-
-    this.carForm.controls.cars['controls'].push(this.generateCar(car))
-    console.log(this.carForm.controls)
+    this.carsControl.push(this.generateCar(car))
   }
 
   //Add and update data
   saveData(): void {
-    console.log(this.carsControl)
-    console.log(this.carForm.value)
+    console.log('this.carForm.value ', this.carForm.value)
 
+    const newCar = {
+      ...this.carForm.value,
+      id: this.owner.id,
+    }
+    console.log('newCar ', newCar)
     if (this.editMode) {
-      this.carOwnersService
-        .editOwner({
-          ...this.carForm.value,
-          id: this.owner.id,
-          cars: this.carForm.controls.cars['controls'],
-        })
-        .subscribe(() => {
-          this.router.navigate(['/'])
-        })
+      this.carOwnersService.editOwner(newCar).subscribe(() => {
+        this.router.navigate(['/'])
+      })
     } else {
       this.createNewOwner()
     }
   }
-
+  //create new owner
   createNewOwner() {
     if (this.carForm.invalid) {
       this.snackBar.openSnackBar('Значение формы заполнены некорректно!!!')
