@@ -19,6 +19,12 @@ export class InMemoryDataService {
             producer: 'Toyota Motor Corporation',
             year: 1999,
           },
+          {
+            nameCar: 'Toyota Camry 20',
+            numberCar: 'AX3333HP',
+            producer: 'Toyota Motor Corporation',
+            year: 2015,
+          },
         ],
       },
       {
@@ -31,7 +37,7 @@ export class InMemoryDataService {
             nameCar: 'Toyota Mark 2',
             numberCar: 'AX2222HP',
             producer: 'Toyota Motor Corporation',
-            year: 1900,
+            year: 1999,
           },
         ],
       },
@@ -42,7 +48,7 @@ export class InMemoryDataService {
 
   genId(owners: OwnerEntityInterface[]): number {
     return owners.length > 0
-      ? Math.max(...owners.map((owner) => owner.id)) + 1
+      ? Math.max(...owners.map((owner: OwnerEntityInterface) => owner.id)) + 1
       : 1
   }
 }
